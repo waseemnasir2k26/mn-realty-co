@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, CheckCircle, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { addBid, getUser } from "@/lib/auth";
+import { useAuth } from "@/components/AuthProvider";
 
 interface BidModalProps {
   listingId: string;
@@ -21,6 +22,7 @@ export default function BidModal({
   isOpen,
   onClose,
 }: BidModalProps) {
+  const { setUser } = useAuth();
   const [bidAmount, setBidAmount] = useState(listingPrice);
   const [message, setMessage] = useState("");
   const [hasPreApproval, setHasPreApproval] = useState(false);
@@ -48,6 +50,9 @@ export default function BidModal({
       return;
     }
     addBid(listingId, bidAmount, message);
+    // Sync updated user (with new bid) to React context
+    const updatedUser = getUser();
+    if (updatedUser) setUser(updatedUser);
     setSubmitted(true);
   };
 

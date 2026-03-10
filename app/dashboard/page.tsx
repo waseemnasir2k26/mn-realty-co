@@ -13,7 +13,6 @@ import {
   Clock,
   CheckCircle2,
   XCircle,
-  AlertCircle,
   Bed,
   Bath,
   Maximize,
@@ -24,9 +23,8 @@ import {
   type User,
   type Bid,
   type UserListing,
-  addBid as addBidFn,
   addSubmission as addSubmissionFn,
-  saveUser,
+  getUser as getLatestUser,
 } from "@/lib/auth";
 import { LISTINGS, formatPrice } from "@/lib/listings";
 
@@ -376,7 +374,7 @@ function SubmitListingTab({
     }
 
     try {
-      const submission = addSubmissionFn({
+      addSubmissionFn({
         address: form.address,
         city: form.city,
         state: form.state,
@@ -390,12 +388,9 @@ function SubmitListingTab({
         image: form.image || undefined,
       });
 
-      // Refresh user in context
-      if (user) {
-        const updated = { ...user };
-        updated.submissions = [...updated.submissions, submission];
-        setUser(updated);
-      }
+      // Sync updated user from localStorage to React context
+      const updated = getLatestUser();
+      if (updated) setUser(updated);
 
       setSuccess(true);
       setForm({

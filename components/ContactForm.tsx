@@ -11,6 +11,7 @@ export default function ContactForm() {
     phone: "",
     message: "",
   });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -21,10 +22,7 @@ export default function ContactForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert(
-      "Thank you for reaching out! We'll get back to you as soon as possible."
-    );
+    setSubmitted(true);
     setFormData({
       firstName: "",
       lastName: "",
@@ -32,6 +30,7 @@ export default function ContactForm() {
       phone: "",
       message: "",
     });
+    setTimeout(() => setSubmitted(false), 5000);
   };
 
   const inputClasses =
@@ -46,6 +45,13 @@ export default function ContactForm() {
       onSubmit={handleSubmit}
       className="space-y-5"
     >
+      {/* Success Message */}
+      {submitted && (
+        <div className="bg-forest/10 border border-forest/20 text-forest text-sm rounded-lg px-4 py-3 font-medium">
+          Thank you for reaching out! We&apos;ll get back to you as soon as possible.
+        </div>
+      )}
+
       {/* Name Fields - 2 Column */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>

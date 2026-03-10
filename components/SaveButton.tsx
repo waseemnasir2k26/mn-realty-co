@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getUser, toggleSavedListing, saveUser } from "@/lib/auth";
+import { getUser, toggleSavedListing } from "@/lib/auth";
+import { useAuth } from "@/components/AuthProvider";
 
 interface SaveButtonProps {
   listingId: string;
@@ -11,6 +12,7 @@ interface SaveButtonProps {
 }
 
 export default function SaveButton({ listingId, className }: SaveButtonProps) {
+  const { setUser } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
   const [animate, setAnimate] = useState(false);
   const router = useRouter();
@@ -32,11 +34,11 @@ export default function SaveButton({ listingId, className }: SaveButtonProps) {
       return;
     }
 
-    toggleSavedListing(listingId);
+    const nowSaved = toggleSavedListing(listingId);
+    setIsSaved(nowSaved);
+    // Sync updated user to React context
     const updatedUser = getUser();
-    if (updatedUser) {
-      setIsSaved(updatedUser.savedListings.includes(listingId));
-    }
+    if (updatedUser) setUser(updatedUser);
 
     // Trigger animation
     setAnimate(true);

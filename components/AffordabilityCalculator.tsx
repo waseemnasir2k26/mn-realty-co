@@ -286,7 +286,7 @@ export default function AffordabilityCalculator() {
                   cy="70"
                   r="60"
                   fill="none"
-                  stroke="#1B365D"
+                  stroke="#1B2A4A"
                   strokeWidth="16"
                   strokeDasharray={`${piArc} ${circumference - piArc}`}
                   strokeDashoffset={piOffset}
@@ -298,7 +298,7 @@ export default function AffordabilityCalculator() {
                   cy="70"
                   r="60"
                   fill="none"
-                  stroke="#C8A951"
+                  stroke="#C8973E"
                   strokeWidth="16"
                   strokeDasharray={`${taxArc} ${circumference - taxArc}`}
                   strokeDashoffset={taxOffset}
@@ -310,7 +310,7 @@ export default function AffordabilityCalculator() {
                   cy="70"
                   r="60"
                   fill="none"
-                  stroke="#4A7C59"
+                  stroke="#2D6A4F"
                   strokeWidth="16"
                   strokeDasharray={`${insArc} ${circumference - insArc}`}
                   strokeDashoffset={insOffset}

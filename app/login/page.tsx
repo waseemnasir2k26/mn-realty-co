@@ -39,13 +39,13 @@ export default function LoginPage() {
       return;
     }
 
-    const found = loginUser(email);
-    if (found) {
-      setUser(found);
-      router.push("/dashboard");
-    } else {
-      setError("No account found with that email. Please register first.");
+    const result = loginUser(email, password);
+    if ("error" in result) {
+      setError(result.error);
       setIsSubmitting(false);
+    } else {
+      setUser(result);
+      router.push("/dashboard");
     }
   };
 

@@ -63,7 +63,7 @@ export default function RegisterPage() {
       return;
     }
 
-    const newUser = registerUser({
+    const result = registerUser({
       email,
       firstName,
       lastName,
@@ -72,7 +72,13 @@ export default function RegisterPage() {
       role,
     });
 
-    setUser(newUser);
+    if ("error" in result) {
+      setError(result.error);
+      setIsSubmitting(false);
+      return;
+    }
+
+    setUser(result);
     router.push("/dashboard");
   };
 
