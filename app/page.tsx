@@ -3,6 +3,7 @@ import FeaturedListings from "@/components/home/FeaturedListings";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import AgentSpotlight from "@/components/home/AgentSpotlight";
 import Testimonials from "@/components/home/Testimonials";
+import NewsFeed from "@/components/home/NewsFeed";
 import CTABanner from "@/components/home/CTABanner";
 import TrustBar from "@/components/home/TrustBar";
 
@@ -15,6 +16,7 @@ export default function Home() {
       <WhyChooseUs />
       <AgentSpotlight />
       <Testimonials />
+      <NewsFeed />
       <CTABanner />
     </>
   );

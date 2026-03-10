@@ -3,6 +3,8 @@ import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ChatBot from "@/components/ChatBot";
+import SocialProof from "@/components/SocialProof";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -36,6 +38,8 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <SocialProof />
+        <ChatBot />
       </body>
     </html>
   );

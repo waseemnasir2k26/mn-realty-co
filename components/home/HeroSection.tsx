@@ -1,14 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import SearchBar from "@/components/shared/SearchBar";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-navy-dark">
+    <section className="relative min-h-[90vh] flex items-center bg-navy-dark overflow-hidden">
+      {/* Background Image */}
+      <Image
+        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920&h=1080&fit=crop"
+        alt="Minnesota landscape"
+        fill
+        className="object-cover"
+        priority
+      />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-navy-dark/85" />
+
       {/* Subtle dot pattern */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage:
             "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)",

@@ -1,12 +1,23 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import SearchBar from "@/components/shared/SearchBar";
 
 export default function BuyHero() {
   return (
-    <section className="relative bg-navy-dark py-32 md:py-40">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+    <section className="relative overflow-hidden bg-navy-dark py-32 md:py-40">
+      {/* Background Image */}
+      <Image
+        src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1920&h=1080&fit=crop"
+        alt="Beautiful suburban home"
+        fill
+        className="object-cover"
+      />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-navy-dark/80" />
+
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -1,17 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import SectionHeading from "@/components/shared/SectionHeading";
 
+const AREA_IMAGES = [
+  "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1595521624992-48a59aef95e3?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1444723121867-7a241cacace9?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop",
+];
+
 const AREAS = [
-  { name: "Hastings", listings: 18, bg: "bg-navy" },
-  { name: "Rochester", listings: 24, bg: "bg-navy" },
-  { name: "Twin Cities Metro", listings: 22, bg: "bg-navy-light" },
-  { name: "Dakota County", listings: 15, bg: "bg-navy-light" },
-  { name: "Prescott", listings: 9, bg: "bg-forest-dark" },
-  { name: "Red Wing", listings: 12, bg: "bg-forest-dark" },
-  { name: "Cottage Grove", listings: 7, bg: "bg-navy-dark" },
-  { name: "Cannon Falls", listings: 5, bg: "bg-navy-dark" },
+  { name: "Hastings", listings: 18 },
+  { name: "Rochester", listings: 24 },
+  { name: "Twin Cities Metro", listings: 22 },
+  { name: "Dakota County", listings: 15 },
+  { name: "Prescott", listings: 9 },
+  { name: "Red Wing", listings: 12 },
+  { name: "Cottage Grove", listings: 7 },
+  { name: "Cannon Falls", listings: 5 },
 ];
 
 export default function BrowseByArea() {
@@ -28,17 +40,24 @@ export default function BrowseByArea() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className={`relative group rounded-2xl overflow-hidden h-40 md:h-48 cursor-pointer ${area.bg}`}
+              className="relative group rounded-2xl overflow-hidden h-40 md:h-48 cursor-pointer"
             >
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-gold/0 group-hover:bg-gold/20 transition-all duration-300" />
+              {/* Background Image */}
+              <Image
+                src={AREA_IMAGES[index]}
+                alt={area.name}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              {/* Dark Overlay */}
+              <div className="absolute inset-0 bg-navy-dark/60 group-hover:bg-navy-dark/40 transition-all duration-300" />
 
               {/* Content */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 z-10">
                 <h3 className="text-white font-heading text-lg md:text-xl font-bold">
                   {area.name}
                 </h3>
-                <p className="text-white/60 text-sm mt-1">
+                <p className="text-white/70 text-sm mt-1">
                   {area.listings} Listings
                 </p>
               </div>

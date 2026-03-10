@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { AGENTS } from "@/lib/constants";
 
 export default function CompanyStory() {
@@ -10,22 +11,29 @@ export default function CompanyStory() {
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
-          {/* Left - Photo Placeholder */}
+          {/* Left - Photo */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="bg-navy rounded-2xl h-80 md:h-[28rem] flex items-center justify-center">
-              <div className="flex flex-col items-center text-center">
+            <div className="relative rounded-2xl h-80 md:h-[28rem] overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop"
+                alt="MN Realty Co office"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-navy-dark/60" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10">
                 <div className="w-24 h-24 rounded-full bg-gold flex items-center justify-center">
                   <span className="text-white text-3xl font-bold">JL</span>
                 </div>
                 <p className="text-white font-heading text-xl font-bold mt-4">
                   Joseph Lawler
                 </p>
-                <p className="text-white/60 text-sm mt-1">Broker/Owner</p>
+                <p className="text-white/70 text-sm mt-1">Broker/Owner</p>
               </div>
             </div>
           </motion.div>
