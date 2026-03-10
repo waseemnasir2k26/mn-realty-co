@@ -2,7 +2,6 @@
 
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
-import { fadeInUp } from "@/lib/animations";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -35,25 +34,24 @@ export default function ContactForm() {
     });
   };
 
+  const inputClasses =
+    "w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition";
+
   return (
     <motion.form
-      initial="hidden"
-      whileInView="visible"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      variants={fadeInUp}
+      transition={{ duration: 0.5 }}
       onSubmit={handleSubmit}
-      className="bg-white rounded-2xl shadow-xl p-8"
+      className="space-y-5"
     >
-      <h2 className="font-heading text-2xl font-bold text-navy mb-6">
-        Send Us a Message
-      </h2>
-
       {/* Name Fields - 2 Column */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
           <label
             htmlFor="firstName"
-            className="block text-sm font-semibold text-charcoal mb-1"
+            className="block text-sm font-medium text-navy mb-1.5"
           >
             First Name
           </label>
@@ -64,14 +62,14 @@ export default function ContactForm() {
             value={formData.firstName}
             onChange={handleChange}
             required
-            className="rounded-lg border border-gray-300 p-3 w-full focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all"
+            className={inputClasses}
             placeholder="John"
           />
         </div>
         <div>
           <label
             htmlFor="lastName"
-            className="block text-sm font-semibold text-charcoal mb-1"
+            className="block text-sm font-medium text-navy mb-1.5"
           >
             Last Name
           </label>
@@ -82,17 +80,17 @@ export default function ContactForm() {
             value={formData.lastName}
             onChange={handleChange}
             required
-            className="rounded-lg border border-gray-300 p-3 w-full focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all"
+            className={inputClasses}
             placeholder="Doe"
           />
         </div>
       </div>
 
       {/* Email */}
-      <div className="mb-4">
+      <div>
         <label
           htmlFor="email"
-          className="block text-sm font-semibold text-charcoal mb-1"
+          className="block text-sm font-medium text-navy mb-1.5"
         >
           Email
         </label>
@@ -103,16 +101,16 @@ export default function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="rounded-lg border border-gray-300 p-3 w-full focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all"
+          className={inputClasses}
           placeholder="john@example.com"
         />
       </div>
 
       {/* Phone */}
-      <div className="mb-4">
+      <div>
         <label
           htmlFor="phone"
-          className="block text-sm font-semibold text-charcoal mb-1"
+          className="block text-sm font-medium text-navy mb-1.5"
         >
           Phone
         </label>
@@ -122,16 +120,16 @@ export default function ContactForm() {
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="rounded-lg border border-gray-300 p-3 w-full focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all"
+          className={inputClasses}
           placeholder="(555) 123-4567"
         />
       </div>
 
       {/* Message */}
-      <div className="mb-6">
+      <div>
         <label
           htmlFor="message"
-          className="block text-sm font-semibold text-charcoal mb-1"
+          className="block text-sm font-medium text-navy mb-1.5"
         >
           Message
         </label>
@@ -142,7 +140,7 @@ export default function ContactForm() {
           onChange={handleChange}
           required
           rows={5}
-          className="rounded-lg border border-gray-300 p-3 w-full focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all resize-none"
+          className={`${inputClasses} resize-none`}
           placeholder="How can we help you?"
         />
       </div>
@@ -150,7 +148,7 @@ export default function ContactForm() {
       {/* Submit Button */}
       <button
         type="submit"
-        className="bg-gold text-white rounded-full px-8 py-3 font-semibold uppercase tracking-wider w-full hover:bg-gold-dark transition-colors cursor-pointer"
+        className="w-full bg-gold text-white py-3 rounded-lg font-semibold hover:bg-gold-dark transition mt-2 text-sm cursor-pointer"
       >
         Send Message
       </button>

@@ -5,9 +5,7 @@ import SellerForm from "@/components/sell/SellerForm";
 import PlatformsShowcase from "@/components/sell/PlatformsShowcase";
 
 export const metadata: Metadata = {
-  title: "Sell Your Home | MN Realty Co.",
-  description:
-    "Get top dollar for your Minnesota home with MN Realty Co. Enjoy 360 virtual tours, drone photography, free radon tests, and cutting-edge marketing tools.",
+  title: "Sell Your Home",
 };
 
 export default function SellPage() {

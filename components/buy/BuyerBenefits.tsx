@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Eye, BadgeDollarSign, Users, Truck } from "lucide-react";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
 import SectionHeading from "@/components/shared/SectionHeading";
 import Button from "@/components/shared/Button";
 
@@ -10,66 +9,59 @@ const BENEFITS = [
   {
     icon: Eye,
     title: "See Listings First",
-    description:
-      "Properties on our site before Zillow & Realtor.com",
+    description: "Properties on our site before Zillow & Realtor.com",
   },
   {
     icon: BadgeDollarSign,
-    title: "VIP Home Financing",
+    title: "VIP Financing",
     description: "Exclusive financing options for our clients",
   },
   {
     icon: Users,
     title: "Expert Guidance",
-    description:
-      "From search to close, we're with you every step",
+    description: "From search to close, we\u2019re with you every step",
   },
   {
     icon: Truck,
     title: "Free Moving Truck",
-    description: "Complimentary rental for our clients",
+    description: "Complimentary rental when you buy with us",
   },
 ];
 
 export default function BuyerBenefits() {
   return (
-    <section className="bg-cream py-20 px-4">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-20 md:py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="The MN Realty Co Buyer Advantage" />
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12"
-        >
-          {BENEFITS.map((benefit) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
+          {BENEFITS.map((benefit, index) => {
             const Icon = benefit.icon;
             return (
               <motion.div
                 key={benefit.title}
-                variants={fadeInUp}
-                className="bg-white rounded-xl p-8 text-center shadow-md hover:shadow-lg transition-shadow duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-cream rounded-2xl p-6 md:p-8 text-center"
               >
-                <div className="w-16 h-16 mx-auto bg-gold/10 rounded-full flex items-center justify-center">
-                  <Icon className="w-7 h-7 text-gold" />
+                <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mx-auto">
+                  <Icon className="w-6 h-6 text-gold" />
                 </div>
-                <h3 className="font-semibold text-lg text-navy mt-4">
+                <h3 className="text-base font-semibold text-navy mt-4">
                   {benefit.title}
                 </h3>
-                <p className="text-charcoal-light mt-2">
+                <p className="text-sm text-charcoal-light mt-2 leading-relaxed">
                   {benefit.description}
                 </p>
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
 
-        <div className="text-center mt-12">
-          <Button href="/contact" variant="primary">
-            Connect With an Agent
-          </Button>
+        <div className="flex justify-center mt-10">
+          <Button href="/contact">Connect With an Agent</Button>
         </div>
       </div>
     </section>

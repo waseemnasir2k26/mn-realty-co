@@ -5,118 +5,88 @@ import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Get in touch with Minnesota Realty Company.",
 };
 
 export default function ContactPage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="h-[40vh] bg-gradient-to-b from-navy-dark to-navy flex items-center justify-center">
-        <div className="text-center px-4">
-          <h1 className="font-heading text-4xl md:text-6xl text-white">
+      {/* Hero */}
+      <section className="bg-navy-dark py-32 md:py-40">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white">
             Get In Touch
           </h1>
-          <p className="text-gray-300 text-lg mt-4 max-w-2xl mx-auto">
+          <p className="text-lg text-white/60 mt-4">
             We&apos;d love to hear from you
           </p>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Left Column - Contact Form */}
-            <div>
+      <section className="py-20 md:py-28 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+            {/* Left Column - Form */}
+            <div className="lg:col-span-3">
+              <h2 className="font-heading text-2xl font-bold text-navy mb-6">
+                Send Us a Message
+              </h2>
               <ContactForm />
             </div>
 
-            {/* Right Column - Contact Info */}
-            <div className="space-y-8">
-              {/* Office Info Card */}
-              <div className="bg-white rounded-2xl shadow-xl p-8">
-                <h2 className="font-heading text-2xl font-bold text-navy mb-6">
+            {/* Right Column - Info */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Office Card */}
+              <div className="bg-cream rounded-2xl p-6">
+                <h3 className="text-lg font-semibold text-navy mb-4">
                   Our Office
-                </h2>
-
-                <div className="space-y-5">
-                  {/* Address */}
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                      <MapPin className="w-5 h-5 text-gold" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-charcoal">Address</p>
-                      <p className="text-charcoal-light">
-                        {COMPANY.address}
-                      </p>
-                    </div>
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-gold mt-0.5 shrink-0" />
+                    <p className="text-sm text-charcoal-light">
+                      {COMPANY.address}
+                    </p>
                   </div>
-
-                  {/* Email */}
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                      <Mail className="w-5 h-5 text-gold" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-charcoal">Email</p>
-                      <a
-                        href={`mailto:${COMPANY.email}`}
-                        className="text-charcoal-light hover:text-gold transition-colors"
-                      >
-                        {COMPANY.email}
-                      </a>
-                    </div>
+                  <div className="flex items-start gap-3">
+                    <Mail className="w-5 h-5 text-gold mt-0.5 shrink-0" />
+                    <a
+                      href={`mailto:${COMPANY.email}`}
+                      className="text-sm text-charcoal-light hover:text-gold transition-colors"
+                    >
+                      {COMPANY.email}
+                    </a>
                   </div>
-
-                  {/* Phone */}
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                      <Phone className="w-5 h-5 text-gold" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-charcoal">Phone</p>
-                      <a
-                        href={`tel:${COMPANY.phone}`}
-                        className="text-charcoal-light hover:text-gold transition-colors"
-                      >
-                        {COMPANY.phone}
-                      </a>
-                    </div>
+                  <div className="flex items-start gap-3">
+                    <Phone className="w-5 h-5 text-gold mt-0.5 shrink-0" />
+                    <a
+                      href={`tel:${COMPANY.phone.replace(/[^\d+]/g, "")}`}
+                      className="text-sm text-charcoal-light hover:text-gold transition-colors"
+                    >
+                      {COMPANY.phone}
+                    </a>
                   </div>
-
-                  {/* Hours */}
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                      <Clock className="w-5 h-5 text-gold" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-charcoal">
-                        Office Hours
-                      </p>
-                      <p className="text-charcoal-light">
-                        Mon-Fri: 9am-6pm, Sat: 10am-4pm
-                      </p>
-                    </div>
+                  <div className="flex items-start gap-3">
+                    <Clock className="w-5 h-5 text-gold mt-0.5 shrink-0" />
+                    <p className="text-sm text-charcoal-light">
+                      Mon&ndash;Fri: 9am&ndash;6pm
+                    </p>
                   </div>
                 </div>
               </div>
 
               {/* Text Us Card */}
-              <div className="bg-navy rounded-2xl shadow-xl p-8 text-center">
-                <div className="w-14 h-14 rounded-full bg-gold/20 flex items-center justify-center mx-auto mb-4">
-                  <MessageSquare className="w-7 h-7 text-gold" />
-                </div>
-                <h3 className="font-heading text-xl font-bold text-white mb-2">
+              <div className="bg-navy rounded-2xl p-6 text-center">
+                <MessageSquare className="w-8 h-8 text-gold mx-auto" />
+                <p className="text-white font-semibold mt-3">
                   Prefer to Text?
-                </h3>
-                <p className="text-gray-300 mb-4">
-                  Send us a message!
+                </p>
+                <p className="text-white/60 text-sm mt-1">
+                  Send us a message anytime
                 </p>
                 <a
-                  href={`tel:${COMPANY.phone}`}
-                  className="text-gold text-2xl font-bold hover:text-gold-light transition-colors"
+                  href={`tel:${COMPANY.phone.replace(/[^\d+]/g, "")}`}
+                  className="text-gold text-xl font-bold mt-2 block hover:text-gold-light transition-colors"
                 >
                   {COMPANY.phone}
                 </a>

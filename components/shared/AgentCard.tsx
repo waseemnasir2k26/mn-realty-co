@@ -10,7 +10,6 @@ interface Agent {
   area: string;
   phone: string;
   email: string;
-  photo?: string;
   slug: string;
 }
 
@@ -29,54 +28,54 @@ function getInitials(name: string): string {
 export default function AgentCard({ agent }: AgentCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 p-8"
+      transition={{ duration: 0.4 }}
+      className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-md transition-shadow"
     >
-      {/* Avatar with Initials */}
-      <div className="flex justify-center mb-5">
-        <div className="w-24 h-24 rounded-full bg-gold text-white flex items-center justify-center text-2xl font-bold">
+      {/* Avatar */}
+      <div className="w-20 h-20 rounded-full bg-navy flex items-center justify-center mx-auto">
+        <span className="text-white text-xl font-bold">
           {getInitials(agent.name)}
-        </div>
+        </span>
       </div>
 
-      {/* Name */}
-      <h3 className="font-heading text-xl font-bold text-navy text-center">
+      {/* Name & Title */}
+      <h3 className="font-heading text-lg font-bold text-navy text-center mt-4">
         {agent.name}
       </h3>
-
-      {/* Title & Credentials */}
-      <p className="text-charcoal-light text-sm text-center mt-1">
-        {agent.title}
-        {agent.credentials && ` | ${agent.credentials}`}
-      </p>
+      <p className="text-sm text-charcoal-light text-center">{agent.title}</p>
+      {agent.credentials && (
+        <p className="text-xs text-gold text-center mt-1">
+          {agent.credentials}
+        </p>
+      )}
 
       {/* Divider */}
-      <div className="w-12 h-0.5 bg-gold mx-auto my-4 rounded-full" />
+      <div className="border-t border-gray-100 my-4" />
 
-      {/* Area */}
-      <div className="flex items-center justify-center gap-2 text-charcoal-light text-sm">
-        <MapPin className="w-4 h-4 text-gold" />
-        <span>{agent.area}</span>
-      </div>
+      {/* Details */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-2 text-sm text-charcoal-light">
+          <MapPin className="w-4 h-4 text-gold shrink-0" />
+          <span>{agent.area}</span>
+        </div>
 
-      {/* Contact Info */}
-      <div className="mt-4 space-y-2">
         <a
-          href={`tel:${agent.phone}`}
-          className="flex items-center justify-center gap-2 text-sm text-charcoal hover:text-gold transition-colors"
+          href={`tel:${agent.phone.replace(/[^\d+]/g, "")}`}
+          className="flex items-center gap-2 text-sm text-charcoal-light hover:text-gold transition-colors"
         >
-          <Phone className="w-4 h-4" />
+          <Phone className="w-4 h-4 text-gold shrink-0" />
           <span>{agent.phone}</span>
         </a>
+
         <a
           href={`mailto:${agent.email}`}
-          className="flex items-center justify-center gap-2 text-sm text-charcoal hover:text-gold transition-colors"
+          className="flex items-center gap-2 text-sm text-charcoal-light hover:text-gold transition-colors"
         >
-          <Mail className="w-4 h-4" />
-          <span>{agent.email}</span>
+          <Mail className="w-4 h-4 text-gold shrink-0" />
+          <span className="truncate">{agent.email}</span>
         </a>
       </div>
     </motion.div>

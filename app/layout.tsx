@@ -5,17 +5,15 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
 const playfair = Playfair_Display({
-  variable: "--font-heading",
+  variable: "--font-playfair",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 const dmSans = DM_Sans({
-  variable: "--font-body",
+  variable: "--font-dm",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -24,16 +22,7 @@ export const metadata: Metadata = {
     template: "%s | MN Realty Co.",
   },
   description:
-    "An agent-friendly, local real estate company helping Home Buyers and Sellers in the greater Minnesota area. Browse listings, find agents, and get started today.",
-  keywords: [
-    "Minnesota real estate",
-    "MN Realty",
-    "Hastings homes",
-    "Rochester real estate",
-    "Dakota County",
-    "buy home Minnesota",
-    "sell home Minnesota",
-  ],
+    "An agent-friendly, local real estate company helping Home Buyers and Sellers in the greater Minnesota area.",
 };
 
 export default function RootLayout({
@@ -42,10 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body
-        className={`${playfair.variable} ${dmSans.variable} font-body antialiased`}
-      >
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
+      <body className="font-body antialiased">
         <Navbar />
         <main>{children}</main>
         <Footer />

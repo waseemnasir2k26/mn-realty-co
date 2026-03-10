@@ -1,113 +1,108 @@
 import type { Metadata } from "next";
 import { AGENTS } from "@/lib/constants";
 import AgentCard from "@/components/shared/AgentCard";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { Phone, Mail } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Our Agents",
-  description:
-    "Meet our team of expert real estate agents serving greater Minnesota.",
 };
 
 export default function AgentsPage() {
-  const featuredAgent = AGENTS.find((agent) => agent.featured);
-  const otherAgents = AGENTS.filter((agent) => !agent.featured);
-
   return (
     <>
       {/* Hero Section */}
-      <section className="h-[40vh] bg-gradient-to-b from-navy-dark to-navy flex items-center justify-center">
-        <div className="text-center px-4">
-          <h1 className="font-heading text-4xl md:text-6xl text-white">
+      <section className="bg-navy-dark py-32 md:py-40">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white">
             Our Expert Agents
           </h1>
-          <p className="text-gray-300 text-lg mt-4 max-w-2xl mx-auto">
+          <p className="text-lg text-white/60 mt-4">
             13 dedicated professionals serving communities across Minnesota
           </p>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          {/* Featured Agent - Joseph Lawler */}
-          {featuredAgent && (
-            <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-16">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                {/* Left - Avatar */}
-                <div className="flex justify-center">
-                  <div className="w-32 h-32 rounded-full bg-gold text-white flex items-center justify-center text-4xl font-bold shadow-lg">
-                    JL
-                  </div>
+      {/* Featured Agent */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+            {/* Left - Avatar Card */}
+            <div className="md:col-span-2">
+              <div className="bg-navy rounded-2xl p-8 flex flex-col items-center text-center">
+                <div className="w-28 h-28 rounded-full bg-gold flex items-center justify-center">
+                  <span className="text-white text-3xl font-bold">JL</span>
                 </div>
-
-                {/* Right - Info */}
-                <div>
-                  <h2 className="font-heading text-3xl font-bold text-navy">
-                    {featuredAgent.name}
-                  </h2>
-                  <p className="text-gold font-semibold text-lg mt-1">
-                    {featuredAgent.title}
+                <p className="text-white font-heading text-xl font-bold mt-4">
+                  {AGENTS[0].name}
+                </p>
+                <p className="text-white/60 text-sm">{AGENTS[0].title}</p>
+                {AGENTS[0].credentials && (
+                  <p className="text-gold text-xs mt-1">
+                    {AGENTS[0].credentials}
                   </p>
-                  {featuredAgent.credentials && (
-                    <p className="text-charcoal-light text-sm mt-1">
-                      {featuredAgent.credentials}
-                    </p>
-                  )}
-
-                  {featuredAgent.bio && (
-                    <p className="text-charcoal-light mt-4 leading-relaxed">
-                      {featuredAgent.bio}
-                    </p>
-                  )}
-
-                  {/* Service Areas */}
-                  {featuredAgent.serviceAreas && (
-                    <div className="mt-5">
-                      <p className="text-sm font-semibold text-charcoal mb-2">
-                        Service Areas:
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {featuredAgent.serviceAreas.map((area) => (
-                          <span
-                            key={area}
-                            className="bg-cream text-charcoal text-xs px-3 py-1 rounded-full border border-gold/30"
-                          >
-                            {area}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Contact Links */}
-                  <div className="mt-6 flex flex-col sm:flex-row gap-4">
-                    <a
-                      href={`tel:${featuredAgent.phone}`}
-                      className="inline-flex items-center gap-2 text-navy hover:text-gold transition-colors font-medium"
-                    >
-                      <Phone className="w-4 h-4" />
-                      {featuredAgent.phone}
-                    </a>
-                    <a
-                      href={`mailto:${featuredAgent.email}`}
-                      className="inline-flex items-center gap-2 text-navy hover:text-gold transition-colors font-medium"
-                    >
-                      <Mail className="w-4 h-4" />
-                      {featuredAgent.email}
-                    </a>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
-          )}
 
-          {/* Gold Divider */}
-          <div className="w-24 h-1 bg-gold mx-auto rounded-full mb-16" />
+            {/* Right - Info */}
+            <div className="md:col-span-3">
+              <h2 className="font-heading text-2xl font-bold text-navy">
+                Meet Our Broker
+              </h2>
+              <p className="text-charcoal-light mt-3 leading-relaxed text-sm">
+                {AGENTS[0].bio
+                  ? AGENTS[0].bio.substring(0, 250) + "..."
+                  : ""}
+              </p>
 
-          {/* Agent Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {otherAgents.map((agent) => (
+              {AGENTS[0].serviceAreas && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {AGENTS[0].serviceAreas.map((area) => (
+                    <span
+                      key={area}
+                      className="bg-cream text-xs px-3 py-1 rounded-full text-charcoal-light"
+                    >
+                      {area}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-4 flex gap-4">
+                <a
+                  href={`tel:${AGENTS[0].phone.replace(/[^\d+]/g, "")}`}
+                  className="text-sm text-navy hover:text-gold flex items-center gap-2 transition-colors"
+                >
+                  <Phone className="w-4 h-4" />
+                  {AGENTS[0].phone}
+                </a>
+                <a
+                  href={`mailto:${AGENTS[0].email}`}
+                  className="text-sm text-navy hover:text-gold flex items-center gap-2 transition-colors"
+                >
+                  <Mail className="w-4 h-4" />
+                  {AGENTS[0].email}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="border-t border-gray-100" />
+      </div>
+
+      {/* All Agents Grid */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-heading text-2xl font-bold text-navy text-center mb-10">
+            The Full Team
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {AGENTS.map((agent) => (
               <AgentCard key={agent.slug} agent={agent} />
             ))}
           </div>

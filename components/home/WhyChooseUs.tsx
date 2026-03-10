@@ -1,97 +1,69 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Eye, Monitor, Camera, MapPin, Trees } from "lucide-react";
+import { Eye, BarChart3, Camera, MapPin } from "lucide-react";
 import SectionHeading from "@/components/shared/SectionHeading";
-import Button from "@/components/shared/Button";
-import { slideInLeft, slideInRight } from "@/lib/animations";
 
 const BENEFITS = [
   {
     icon: Eye,
     title: "First Access to Listings",
     description:
-      "Our buyers get notified about new listings before they hit the open market, giving you a head start in a competitive market.",
+      "See new properties before they hit major sites like Zillow and Realtor.com.",
   },
   {
-    icon: Monitor,
+    icon: BarChart3,
     title: "Cutting-Edge Technology",
     description:
-      "Track every step with our proprietary ListingTracker\u2122, OfferTracker\u00AE, and ClosingTracker\u00AE platforms \u2014 real-time updates at your fingertips.",
+      "Track your listing, offers, and closing in real-time with our proprietary platforms.",
   },
   {
     icon: Camera,
-    title: "Full-Service Support",
+    title: "Full-Service Marketing",
     description:
-      "From 360\u00B0 virtual tours and professional drone photography to complimentary radon tests, we handle every detail so you don\u2019t have to.",
+      "360\u00B0 virtual tours, HD drone photography, and free pre-sale radon testing.",
   },
   {
     icon: MapPin,
     title: "Local Expertise",
     description:
-      "With 13+ years serving communities from Hastings to Rochester, our agents know every neighborhood, school district, and market trend.",
+      "Born and raised Minnesotans serving communities we know and love.",
   },
 ];
 
 export default function WhyChooseUs() {
   return (
-    <section className="bg-white py-20 px-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Text */}
-          <motion.div
-            variants={slideInLeft}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <SectionHeading
-              title="Why Minnesota Families Choose Us"
-              centered={false}
-            />
+    <section className="py-20 md:py-28 bg-cream">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          title="Why Families Choose Us"
+          subtitle="Local expertise backed by cutting-edge technology"
+        />
 
-            <div className="mt-10 space-y-8">
-              {BENEFITS.map((benefit) => {
-                const Icon = benefit.icon;
-                return (
-                  <div key={benefit.title} className="flex gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-6 h-6 text-gold" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-lg text-navy">
-                        {benefit.title}
-                      </h3>
-                      <p className="text-charcoal-light mt-1">
-                        {benefit.description}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-10">
-              <Button href="/why-us" variant="outline">
-                Learn More About Us
-              </Button>
-            </div>
-          </motion.div>
-
-          {/* Right Column - Image Placeholder */}
-          <motion.div
-            variants={slideInRight}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-forest to-forest-dark h-96 flex flex-col items-center justify-center">
-              <Trees className="w-20 h-20 text-white/30" />
-              <p className="text-white/60 font-heading text-2xl mt-4">
-                Minnesota Living
-              </p>
-            </div>
-          </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mt-12">
+          {BENEFITS.map((benefit, index) => {
+            const Icon = benefit.icon;
+            return (
+              <motion.div
+                key={benefit.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100"
+              >
+                <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mb-4">
+                  <Icon className="w-6 h-6 text-gold" />
+                </div>
+                <h3 className="text-lg font-semibold text-navy">
+                  {benefit.title}
+                </h3>
+                <p className="text-sm text-charcoal-light mt-2 leading-relaxed">
+                  {benefit.description}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

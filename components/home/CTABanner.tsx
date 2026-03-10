@@ -2,57 +2,42 @@
 
 import { motion } from "framer-motion";
 import Button from "@/components/shared/Button";
-import { fadeInUp } from "@/lib/animations";
+import Link from "next/link";
 
 export default function CTABanner() {
   return (
-    <section className="bg-navy py-16 px-4">
-      <motion.div
-        variants={fadeInUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="max-w-7xl mx-auto"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
-          {/* Left - Buy CTA */}
-          <div className="text-center md:text-left md:pr-12">
-            <h3 className="font-heading text-3xl text-white font-bold">
-              Ready to Buy?
-            </h3>
-            <p className="text-gray-300 mt-3">
-              Browse new listings before anyone else
-            </p>
-            <div className="mt-6">
-              <Button href="/buy" variant="primary">
-                Browse Listings
-              </Button>
-            </div>
-          </div>
+    <section className="py-20 md:py-28 bg-navy-dark">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-white">
+            Ready to Find Your
+            <br />
+            <span className="text-gold">Minnesota Home?</span>
+          </h2>
 
-          {/* Vertical Gold Divider (desktop only) */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gold" />
+          <p className="text-white/60 text-lg mt-4 max-w-xl mx-auto">
+            Whether you&apos;re buying or selling, our team is here to help you
+            every step of the way.
+          </p>
 
-          {/* Right - Sell CTA */}
-          <div className="text-center md:text-left md:pl-12">
-            <h3 className="font-heading text-3xl text-white font-bold">
-              Ready to Sell?
-            </h3>
-            <p className="text-gray-300 mt-3">
-              Get a free home consultation today
-            </p>
-            <div className="mt-6">
-              <Button
-                href="/sell"
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-navy"
-              >
-                Get Started
-              </Button>
-            </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+            <Button variant="primary" href="/buy">
+              Browse Listings
+            </Button>
+            <Link
+              href="/sell"
+              className="border-2 border-white/30 text-white hover:bg-white/10 rounded-lg px-6 py-3 font-semibold transition"
+            >
+              Sell Your Home
+            </Link>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }

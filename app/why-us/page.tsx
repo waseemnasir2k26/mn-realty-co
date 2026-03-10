@@ -1,18 +1,15 @@
 import { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import WhyUsHero from "@/components/why-us/WhyUsHero";
 import CompanyStory from "@/components/why-us/CompanyStory";
 import Differentiators from "@/components/why-us/Differentiators";
 import JoinTeam from "@/components/why-us/JoinTeam";
 import SectionHeading from "@/components/shared/SectionHeading";
 import AgentCard from "@/components/shared/AgentCard";
+import Button from "@/components/shared/Button";
 import { AGENTS } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Why MN Realty Co | MN Realty Co.",
-  description:
-    "Discover why MN Realty Co is the agent-friendly, client-focused real estate company trusted across greater Minnesota.",
+  title: "Why MN Realty Co",
 };
 
 export default function WhyUsPage() {
@@ -22,25 +19,21 @@ export default function WhyUsPage() {
       <CompanyStory />
       <Differentiators />
 
-      {/* Agents Grid Section */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
+      {/* Agents Section */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading title="Meet Our Expert Agents" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            {AGENTS.map((agent) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {AGENTS.slice(0, 8).map((agent) => (
               <AgentCard key={agent.slug} agent={agent} />
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <Link
-              href="/agents"
-              className="inline-flex items-center gap-2 text-gold font-semibold hover:gap-3 transition-all duration-300"
-            >
+          <div className="flex justify-center mt-10">
+            <Button variant="outline" href="/agents">
               View All Agents
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+            </Button>
           </div>
         </div>
       </section>

@@ -1,9 +1,7 @@
-"use client";
-
 import Link from "next/link";
 import { clsx } from "clsx";
 
-type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
+type ButtonVariant = "primary" | "secondary" | "outline";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps {
@@ -17,20 +15,15 @@ interface ButtonProps {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary:
-    "bg-gold text-white hover:bg-gold-dark",
-  secondary:
-    "bg-navy text-white hover:bg-navy-light",
-  outline:
-    "border-2 border-gold text-gold hover:bg-gold hover:text-white",
-  ghost:
-    "text-navy hover:text-gold",
+  primary: "bg-gold text-white hover:bg-gold-dark",
+  secondary: "bg-navy text-white hover:bg-navy-light",
+  outline: "border-2 border-gold text-gold hover:bg-gold hover:text-white",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "px-5 py-2 text-xs",
-  md: "px-7 py-3 text-sm",
-  lg: "px-10 py-4 text-base",
+  sm: "text-sm px-4 py-2",
+  md: "text-base px-6 py-3",
+  lg: "text-lg px-8 py-4",
 };
 
 export default function Button({
@@ -43,9 +36,7 @@ export default function Button({
   type = "button",
 }: ButtonProps) {
   const classes = clsx(
-    "inline-flex items-center justify-center rounded-full uppercase tracking-wider font-semibold",
-    "transition-all duration-300",
-    "hover:-translate-y-0.5 hover:shadow-lg",
+    "inline-flex items-center justify-center font-semibold transition-all duration-200 rounded-lg",
     variantStyles[variant],
     sizeStyles[size],
     className

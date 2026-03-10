@@ -1,20 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { fadeInUp } from "@/lib/animations";
-import SectionHeading from "@/components/shared/SectionHeading";
 import { CheckCircle } from "lucide-react";
+import SectionHeading from "@/components/shared/SectionHeading";
 
 interface FormData {
-  // Step 1
   address: string;
   propertyType: string;
   yearBuilt: string;
   bedrooms: string;
   bathrooms: string;
   sqft: string;
-  // Step 2
   firstName: string;
   lastName: string;
   email: string;
@@ -43,9 +40,15 @@ const INITIAL_FORM_DATA: FormData = {
 };
 
 const inputClasses =
-  "rounded-lg border border-gray-300 p-3 w-full focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all duration-200";
+  "w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition";
 
-const labelClasses = "block text-sm font-semibold text-navy mb-1";
+const labelClasses = "block text-sm font-medium text-navy mb-1.5";
+
+const steps = [
+  { number: 1, label: "Property Info" },
+  { number: 2, label: "Your Details" },
+  { number: 3, label: "Review" },
+];
 
 export default function SellerForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -54,12 +57,6 @@ export default function SellerForm() {
   const updateField = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
-
-  const steps = [
-    { number: 1, label: "Property Info" },
-    { number: 2, label: "Your Details" },
-    { number: 3, label: "Confirm" },
-  ];
 
   const handleNext = () => {
     if (currentStep < 3) setCurrentStep((prev) => prev + 1);
@@ -70,28 +67,26 @@ export default function SellerForm() {
   };
 
   const handleSubmit = () => {
-    // Form submission logic would go here
     console.log("Form submitted:", formData);
   };
 
   return (
-    <section id="seller-form" className="bg-cream py-20 px-4">
-      <div className="max-w-3xl mx-auto">
-        <SectionHeading title="Get Started in 3 Simple Steps" />
+    <section id="seller-form" className="py-20 md:py-28 bg-cream">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6">
+        <SectionHeading title="Get Started in 3 Steps" />
 
         {/* Progress Indicator */}
-        <div className="flex items-center justify-center mt-12 mb-12">
-          {steps.map((step, index) => (
-            <div key={step.number} className="flex items-center">
-              {/* Circle */}
+        <div className="flex items-center justify-center gap-0 mb-10">
+          {steps.map((step, i) => (
+            <Fragment key={step.number}>
               <div className="flex flex-col items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                  className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
                     currentStep > step.number
                       ? "bg-forest text-white"
                       : currentStep === step.number
                         ? "bg-gold text-white"
-                        : "bg-gray-300 text-gray-600"
+                        : "bg-gray-200 text-charcoal-light"
                   }`}
                 >
                   {currentStep > step.number ? (
@@ -100,33 +95,32 @@ export default function SellerForm() {
                     step.number
                   )}
                 </div>
-                <span className="text-xs text-charcoal-light mt-2 whitespace-nowrap">
+                <span className="text-xs text-charcoal-light mt-1.5">
                   {step.label}
                 </span>
               </div>
-
-              {/* Connecting Line */}
-              {index < steps.length - 1 && (
+              {i < 2 && (
                 <div
-                  className={`w-16 sm:w-24 h-0.5 mx-2 mb-6 transition-all duration-300 ${
-                    currentStep > step.number ? "bg-forest" : "bg-gray-300"
+                  className={`w-12 sm:w-20 h-px mx-2 -mt-4 ${
+                    currentStep > step.number ? "bg-forest" : "bg-gray-200"
                   }`}
                 />
               )}
-            </div>
+            </Fragment>
           ))}
         </div>
 
-        {/* Form Steps */}
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        {/* Form Card */}
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm">
           <AnimatePresence mode="wait">
+            {/* Step 1: Property Info */}
             {currentStep === 1 && (
               <motion.div
                 key="step1"
-                variants={fadeInUp}
-                initial="hidden"
-                animate="visible"
-                exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
                 className="space-y-5"
               >
                 <div>
@@ -136,13 +130,13 @@ export default function SellerForm() {
                     placeholder="Enter your property address"
                     value={formData.address}
                     onChange={(e) => updateField("address", e.target.value)}
-                    className={`${inputClasses} text-lg`}
+                    className={`${inputClasses} !text-base`}
                   />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className={labelClasses}>Type of Property</label>
+                    <label className={labelClasses}>Property Type</label>
                     <select
                       value={formData.propertyType}
                       onChange={(e) =>
@@ -157,7 +151,6 @@ export default function SellerForm() {
                       <option value="Townhouse">Townhouse</option>
                     </select>
                   </div>
-
                   <div>
                     <label className={labelClasses}>Year Built</label>
                     <input
@@ -190,7 +183,6 @@ export default function SellerForm() {
                       ))}
                     </select>
                   </div>
-
                   <div>
                     <label className={labelClasses}>Bathrooms</label>
                     <select
@@ -208,7 +200,6 @@ export default function SellerForm() {
                       ))}
                     </select>
                   </div>
-
                   <div>
                     <label className={labelClasses}>Approx Sq/ft</label>
                     <input
@@ -223,13 +214,14 @@ export default function SellerForm() {
               </motion.div>
             )}
 
+            {/* Step 2: Your Details */}
             {currentStep === 2 && (
               <motion.div
                 key="step2"
-                variants={fadeInUp}
-                initial="hidden"
-                animate="visible"
-                exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
                 className="space-y-5"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -245,7 +237,6 @@ export default function SellerForm() {
                       className={inputClasses}
                     />
                   </div>
-
                   <div>
                     <label className={labelClasses}>Last Name *</label>
                     <input
@@ -271,7 +262,6 @@ export default function SellerForm() {
                       className={inputClasses}
                     />
                   </div>
-
                   <div>
                     <label className={labelClasses}>Phone *</label>
                     <input
@@ -308,9 +298,7 @@ export default function SellerForm() {
                   </label>
                   <select
                     value={formData.timeline}
-                    onChange={(e) =>
-                      updateField("timeline", e.target.value)
-                    }
+                    onChange={(e) => updateField("timeline", e.target.value)}
                     className={inputClasses}
                   >
                     <option value="">Select timeline</option>
@@ -340,7 +328,6 @@ export default function SellerForm() {
                       <option value="Maybe">Maybe</option>
                     </select>
                   </div>
-
                   <div>
                     <label className={labelClasses}>
                       Met with a lender?
@@ -362,116 +349,112 @@ export default function SellerForm() {
               </motion.div>
             )}
 
+            {/* Step 3: Review */}
             {currentStep === 3 && (
               <motion.div
                 key="step3"
-                variants={fadeInUp}
-                initial="hidden"
-                animate="visible"
-                exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-5"
               >
-                <h3 className="font-heading text-xl font-bold text-navy mb-6">
-                  Review Your Information
-                </h3>
-
-                <div className="space-y-6">
-                  {/* Property Info Summary */}
-                  <div className="bg-cream rounded-xl p-6">
-                    <h4 className="font-semibold text-navy text-sm uppercase tracking-wider mb-3">
-                      Property Information
-                    </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                      <div>
-                        <span className="text-charcoal-light">Address:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.address || "Not provided"}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">Type:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.propertyType || "Not provided"}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">Year Built:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.yearBuilt || "Not provided"}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">Bedrooms:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.bedrooms || "Not provided"}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">Bathrooms:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.bathrooms || "Not provided"}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">Sq/ft:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.sqft || "Not provided"}
-                        </span>
-                      </div>
+                <div className="bg-cream rounded-xl p-5">
+                  <h4 className="font-semibold text-navy text-sm uppercase tracking-wider mb-3">
+                    Property Information
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <span className="text-charcoal-light">Address:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.address || "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">Type:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.propertyType || "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">Year Built:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.yearBuilt || "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">Bedrooms:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.bedrooms || "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">Bathrooms:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.bathrooms || "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">Sq/ft:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.sqft || "\u2014"}
+                      </span>
                     </div>
                   </div>
+                </div>
 
-                  {/* Contact Info Summary */}
-                  <div className="bg-cream rounded-xl p-6">
-                    <h4 className="font-semibold text-navy text-sm uppercase tracking-wider mb-3">
-                      Your Details
-                    </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                      <div>
-                        <span className="text-charcoal-light">Name:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.firstName} {formData.lastName}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">Email:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.email || "Not provided"}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">Phone:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.phone || "Not provided"}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">Contact via:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.contactMethod || "Not provided"}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">Timeline:</span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.timeline || "Not provided"}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">
-                          Buying another:
-                        </span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.buyingAnother || "Not provided"}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-charcoal-light">
-                          Met with lender:
-                        </span>{" "}
-                        <span className="text-charcoal font-medium">
-                          {formData.metWithLender || "Not provided"}
-                        </span>
-                      </div>
+                <div className="bg-cream rounded-xl p-5">
+                  <h4 className="font-semibold text-navy text-sm uppercase tracking-wider mb-3">
+                    Your Details
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <span className="text-charcoal-light">Name:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.firstName || formData.lastName
+                          ? `${formData.firstName} ${formData.lastName}`.trim()
+                          : "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">Email:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.email || "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">Phone:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.phone || "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">Contact via:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.contactMethod || "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">Timeline:</span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.timeline || "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">
+                        Buying another:
+                      </span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.buyingAnother || "\u2014"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-charcoal-light">
+                        Met with lender:
+                      </span>{" "}
+                      <span className="text-charcoal font-medium">
+                        {formData.metWithLender || "\u2014"}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -479,12 +462,12 @@ export default function SellerForm() {
             )}
           </AnimatePresence>
 
-          {/* Navigation Buttons */}
-          <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
+          {/* Navigation */}
+          <div className="flex justify-between mt-6 pt-6 border-t border-gray-100">
             {currentStep > 1 ? (
               <button
                 onClick={handleBack}
-                className="px-6 py-3 rounded-full border border-gray-300 text-charcoal font-semibold text-sm hover:border-navy hover:text-navy transition-all duration-300"
+                className="text-charcoal-light hover:text-navy font-medium text-sm transition"
               >
                 Back
               </button>
@@ -495,14 +478,14 @@ export default function SellerForm() {
             {currentStep < 3 ? (
               <button
                 onClick={handleNext}
-                className="px-8 py-3 rounded-full bg-gold text-white font-semibold text-sm hover:bg-gold-dark transition-all duration-300"
+                className="bg-gold text-white px-6 py-2.5 rounded-lg font-medium text-sm hover:bg-gold-dark transition"
               >
                 Next
               </button>
             ) : (
               <button
                 onClick={handleSubmit}
-                className="px-8 py-3 rounded-full bg-gold text-white font-semibold text-sm hover:bg-gold-dark transition-all duration-300"
+                className="bg-gold text-white px-6 py-2.5 rounded-lg font-medium text-sm hover:bg-gold-dark transition"
               >
                 Schedule Consultation
               </button>

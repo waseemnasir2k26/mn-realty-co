@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Heart, Monitor, Star } from "lucide-react";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
 import SectionHeading from "@/components/shared/SectionHeading";
 
 const DIFFERENTIATORS = [
@@ -16,48 +15,47 @@ const DIFFERENTIATORS = [
     icon: Monitor,
     title: "Proprietary Technology",
     description:
-      "ListingTracker\u2122, OfferTracker\u00AE, and ClosingTracker\u00AE give our clients real-time visibility into every step.",
+      "ListingTracker\u2122, OfferTracker\u00AE, and ClosingTracker\u00AE give our clients real-time visibility into every step of the process.",
   },
   {
     icon: Star,
     title: "Full-Service Benefits",
     description:
-      "From 360\u00B0 virtual tours to drone photography, free radon tests, and moving trucks \u2014 we go above and beyond.",
+      "From 360\u00B0 virtual tours and drone photography to free radon tests and moving trucks \u2014 we go above and beyond.",
   },
 ];
 
 export default function Differentiators() {
   return (
-    <section className="py-20 bg-cream px-4">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-20 md:py-28 bg-cream">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="What Makes Us Different" />
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {DIFFERENTIATORS.map((item) => {
             const Icon = item.icon;
             return (
               <motion.div
                 key={item.title}
-                variants={fadeInUp}
-                className="bg-white rounded-xl p-8 text-center shadow-md hover:shadow-lg transition-shadow duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100"
               >
-                <div className="w-16 h-16 mx-auto bg-gold/10 rounded-full flex items-center justify-center">
-                  <Icon className="w-7 h-7 text-gold" />
+                <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mb-4">
+                  <Icon className="w-6 h-6 text-gold" />
                 </div>
-                <h3 className="font-semibold text-lg text-navy mt-4">
+                <h3 className="text-lg font-semibold text-navy">
                   {item.title}
                 </h3>
-                <p className="text-charcoal-light mt-2">{item.description}</p>
+                <p className="text-sm text-charcoal-light mt-2 leading-relaxed">
+                  {item.description}
+                </p>
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,12 +1,13 @@
 import Link from "next/link";
+import { MapPin, Mail, Phone } from "lucide-react";
 import { COMPANY } from "@/lib/constants";
 
 const quickLinks = [
   { label: "Home", href: "/" },
-  { label: "Buy a Home", href: "/buy" },
-  { label: "Sell Your Home", href: "/sell" },
-  { label: "Our Agents", href: "/agents" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Buy", href: "/buy" },
+  { label: "Sell", href: "/sell" },
+  { label: "Agents", href: "/agents" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const services = [
@@ -17,43 +18,31 @@ const services = [
   "Buyer Resources",
 ];
 
-const legalLinks = [
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Cookie Policy", href: "/cookies" },
-  { label: "Terms of Service", href: "/terms" },
-  { label: "EULA", href: "/eula" },
-];
-
 export default function Footer() {
   return (
-    <footer className="bg-navy-dark text-gray-400">
-      {/* Main Footer Content */}
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Column 1 - About */}
+    <footer className="bg-navy-dark text-white/70">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Column 1 - Company */}
           <div>
             <h3 className="font-heading text-2xl font-bold text-white">
               {COMPANY.shortName}
             </h3>
-            <p className="mt-4 text-sm leading-relaxed">
-              {COMPANY.tagline}
-            </p>
-            <p className="mt-4 text-sm leading-relaxed">
-              {COMPANY.address}
-            </p>
+            <p className="text-sm mt-2">{COMPANY.tagline}</p>
+            <p className="text-sm mt-4">{COMPANY.address}</p>
           </div>
 
           {/* Column 2 - Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
+            <h4 className="text-white text-sm font-semibold uppercase tracking-wider mb-4">
               Quick Links
             </h4>
-            <ul className="mt-4 space-y-3">
+            <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm transition-colors duration-200 hover:text-gold-light"
+                    className="text-sm hover:text-gold transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -62,81 +51,86 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3 - Our Services */}
+          {/* Column 3 - Services */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
+            <h4 className="text-white text-sm font-semibold uppercase tracking-wider mb-4">
               Our Services
             </h4>
-            <ul className="mt-4 space-y-3">
+            <ul className="space-y-2">
               {services.map((service) => (
-                <li key={service}>
-                  <span className="text-sm">{service}</span>
+                <li key={service} className="text-sm">
+                  {service}
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 4 - Contact Us */}
+          {/* Column 4 - Contact */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white">
+            <h4 className="text-white text-sm font-semibold uppercase tracking-wider mb-4">
               Contact Us
             </h4>
-            <ul className="mt-4 space-y-3">
-              <li className="text-sm">{COMPANY.address}</li>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3 text-sm">
+                <MapPin className="h-4 w-4 text-gold mt-0.5 shrink-0" />
+                <span>{COMPANY.address}</span>
+              </li>
               <li>
                 <a
                   href={`mailto:${COMPANY.email}`}
-                  className="text-sm transition-colors duration-200 hover:text-gold-light"
+                  className="flex items-center gap-3 text-sm hover:text-gold transition-colors"
                 >
-                  {COMPANY.email}
+                  <Mail className="h-4 w-4 text-gold shrink-0" />
+                  <span>{COMPANY.email}</span>
                 </a>
               </li>
               <li>
                 <a
                   href={`tel:${COMPANY.phone.replace(/[^\d+]/g, "")}`}
-                  className="text-sm transition-colors duration-200 hover:text-gold-light"
+                  className="flex items-center gap-3 text-sm hover:text-gold transition-colors"
                 >
-                  {COMPANY.phone}
+                  <Phone className="h-4 w-4 text-gold shrink-0" />
+                  <span>{COMPANY.phone}</span>
                 </a>
               </li>
             </ul>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
-            {/* Copyright */}
-            <p className="text-center text-xs">
+        {/* Bottom bar */}
+        <div className="border-t border-white/10 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-white/50">
               &copy; 2026 | Minnesota Realty Company, LLC | Proudly Serving
               Minnesota
             </p>
-
-            {/* Legal Links */}
-            <ul className="flex flex-wrap justify-center gap-4">
-              {legalLinks.map((link, index) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-xs transition-colors duration-200 hover:text-gold-light"
-                  >
-                    {link.label}
-                  </Link>
-                  {index < legalLinks.length - 1 && (
-                    <span className="ml-4 hidden text-white/20 sm:inline">|</span>
-                  )}
-                </li>
-              ))}
-            </ul>
+            <div className="flex items-center gap-2 text-xs text-white/50">
+              <Link
+                href="/privacy"
+                className="hover:text-white/80 transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <span>&middot;</span>
+              <Link
+                href="/terms"
+                className="hover:text-white/80 transition-colors"
+              >
+                Terms of Service
+              </Link>
+              <span>&middot;</span>
+              <Link
+                href="/eula"
+                className="hover:text-white/80 transition-colors"
+              >
+                EULA
+              </Link>
+            </div>
           </div>
-
-          {/* Equal Housing Opportunity */}
-          <p className="mt-4 text-center text-[11px] leading-relaxed text-gray-500">
+          <p className="text-[11px] text-white/30 text-center mt-6">
             Equal Housing Opportunity. All information deemed reliable but not
-            guaranteed and should be independently verified. All properties are
-            subject to prior sale, change, or withdrawal.
+            guaranteed. Minnesota Realty Company, LLC fully supports the
+            principles of the Fair Housing Act and the Equal Opportunity Act.
           </p>
         </div>
       </div>

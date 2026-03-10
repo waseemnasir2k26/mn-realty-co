@@ -5,9 +5,7 @@ import BrowseByArea from "@/components/buy/BrowseByArea";
 import BuyerBenefits from "@/components/buy/BuyerBenefits";
 
 export const metadata: Metadata = {
-  title: "Buy a Home | MN Realty Co.",
-  description:
-    "Search hundreds of listings across greater Minnesota. Find single family homes, multi-family properties, and more with MN Realty Co.",
+  title: "Buy a Home",
 };
 
 export default function BuyPage() {

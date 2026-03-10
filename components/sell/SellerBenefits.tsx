@@ -3,93 +3,61 @@
 import { motion } from "framer-motion";
 import {
   Camera,
-  Plane,
+  Video,
   Shield,
   ClipboardCheck,
   Truck,
   Wrench,
 } from "lucide-react";
-import { slideInLeft, slideInRight } from "@/lib/animations";
 import SectionHeading from "@/components/shared/SectionHeading";
 import { SELLER_BENEFITS } from "@/lib/constants";
 
-const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Camera,
-  Plane,
+  Plane: Video,
+  Video,
   Shield,
   ClipboardCheck,
   Truck,
   Wrench,
 };
 
-const GRADIENT_PAIRS = [
-  "from-gold to-gold-dark",
-  "from-navy to-navy-dark",
-  "from-forest to-forest-dark",
-  "from-navy-dark to-forest",
-  "from-gold-dark to-navy",
-  "from-forest-dark to-navy-dark",
-];
-
 export default function SellerBenefits() {
   return (
-    <section className="py-20 px-4 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <SectionHeading title="The MN Realty Co Seller Advantage" />
+    <section className="py-20 md:py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          title="The MN Realty Co Seller Advantage"
+          subtitle="Everything you need to sell your home for top dollar"
+        />
 
-        <div className="mt-16 space-y-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {SELLER_BENEFITS.map((benefit, index) => {
-            const Icon = ICON_MAP[benefit.icon];
-            const isEven = index % 2 === 0;
-
+            const Icon = iconMap[benefit.icon];
             return (
-              <div
+              <motion.div
                 key={benefit.title}
-                className="grid md:grid-cols-2 gap-12 items-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-cream rounded-2xl p-6 md:p-8"
               >
-                {/* Image Side */}
-                <motion.div
-                  variants={isEven ? slideInLeft : slideInRight}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  className={`${isEven ? "md:order-1" : "md:order-2"}`}
-                >
-                  <div
-                    className={`rounded-2xl bg-gradient-to-br ${GRADIENT_PAIRS[index % GRADIENT_PAIRS.length]} h-72 flex items-center justify-center`}
-                  >
-                    {Icon && (
-                      <Icon className="w-16 h-16 text-white/50" />
-                    )}
-                  </div>
-                </motion.div>
-
-                {/* Text Side */}
-                <motion.div
-                  variants={isEven ? slideInRight : slideInLeft}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  className={`${isEven ? "md:order-2" : "md:order-1"}`}
-                >
-                  <div className="w-14 h-14 bg-gold/10 rounded-full flex items-center justify-center mb-4">
-                    {Icon && (
-                      <Icon className="w-6 h-6 text-gold" />
-                    )}
-                  </div>
-                  <h3 className="text-2xl font-heading font-bold text-navy">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-charcoal-light text-lg mt-3">
-                    {benefit.description}
-                  </p>
-                </motion.div>
-              </div>
+                <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center">
+                  {Icon && <Icon className="w-6 h-6 text-gold" />}
+                </div>
+                <h3 className="text-lg font-semibold text-navy mt-4">
+                  {benefit.title}
+                </h3>
+                <p className="text-sm text-charcoal-light mt-2 leading-relaxed">
+                  {benefit.description}
+                </p>
+              </motion.div>
             );
           })}
         </div>
 
-        <p className="text-center italic text-gold mt-16 text-lg">
+        <p className="text-center text-charcoal-light italic mt-8 text-sm">
           Ask about our local move discount and exclusive VIP home financing
           options!
         </p>

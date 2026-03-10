@@ -1,78 +1,73 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Quote, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import SectionHeading from "@/components/shared/SectionHeading";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const TESTIMONIALS = [
   {
     id: 1,
-    text: "We were first-time buyers and honestly had no idea where to start. Our agent walked us through every single step \u2014 from pre-approval to closing. We found our dream home in Hastings within three weeks and couldn\u2019t be happier.",
-    name: "Sarah & Michael Thompson",
-    location: "Hastings, MN",
+    text: "Working with MN Realty Co made our first home purchase incredibly smooth. Joseph and his team were always available and truly understood what we were looking for in the Hastings area.",
+    name: "Sarah & Mike T.",
+    location: "Hastings",
   },
   {
     id: 2,
-    text: "Selling our family home of 20 years was emotional, but the team made it seamless. The drone photography and virtual tour brought in so many showings that we had multiple offers within the first weekend. We sold above asking price!",
-    name: "Linda Peterson",
-    location: "Rochester, MN",
+    text: "We sold our home in just 12 days thanks to the amazing marketing \u2014 the drone photography and virtual tour really set our listing apart from everything else on the market.",
+    name: "Jennifer R.",
+    location: "Rochester",
   },
   {
     id: 3,
-    text: "The OfferTracker tool was a game-changer for us. We could see every offer in real time and make informed decisions without the stress. Our agent\u2019s knowledge of the Dakota County market was unmatched. Highly recommend!",
-    name: "James & Priya Nguyen",
-    location: "Cottage Grove, MN",
+    text: "As first-time buyers, we had a lot of questions. Our agent walked us through every step and helped us find the perfect home in Dakota County within our budget.",
+    name: "David & Amanda K.",
+    location: "Dakota County",
   },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="bg-cream py-20 px-4">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-20 md:py-28 bg-cream">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="What Our Clients Say" />
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"
-        >
-          {TESTIMONIALS.map((testimonial) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-12">
+          {TESTIMONIALS.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
-              variants={fadeInUp}
-              className="bg-white rounded-xl p-8 shadow-md"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100"
             >
-              {/* Quote Icon */}
-              <Quote className="w-8 h-8 text-gold mb-4" />
-
-              {/* Testimonial Text */}
-              <p className="italic text-charcoal leading-relaxed">
-                &ldquo;{testimonial.text}&rdquo;
-              </p>
-
               {/* Stars */}
-              <div className="flex gap-1 mt-6">
+              <div className="flex items-center gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className="w-4 h-4 text-gold fill-gold"
+                    className="w-4 h-4 fill-gold text-gold"
                   />
                 ))}
               </div>
 
+              {/* Quote */}
+              <p className="text-charcoal leading-relaxed italic">
+                &ldquo;{testimonial.text}&rdquo;
+              </p>
+
               {/* Author */}
-              <div className="mt-4">
-                <p className="font-semibold text-navy">{testimonial.name}</p>
-                <p className="text-charcoal-light text-sm">
+              <div className="mt-6">
+                <p className="text-sm font-semibold text-navy">
+                  {testimonial.name}
+                </p>
+                <p className="text-xs text-charcoal-light mt-0.5">
                   {testimonial.location}
                 </p>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

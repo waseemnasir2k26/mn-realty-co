@@ -13,7 +13,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const handleScroll = useCallback(() => {
-    setScrolled(window.scrollY > 50);
+    setScrolled(window.scrollY > 20);
   }, []);
 
   useEffect(() => {
@@ -22,18 +22,14 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  // Close mobile menu on route change
+  /* Close mobile menu on route change */
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Prevent body scroll when mobile menu is open
+  /* Lock body scroll when mobile menu is open */
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
@@ -48,16 +44,16 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white shadow-lg"
+          ? "bg-white/95 backdrop-blur-md shadow-sm"
           : "bg-transparent"
       }`}
     >
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
-          {/* Logo / Company Name */}
+          {/* Logo */}
           <Link
             href="/"
-            className={`font-heading text-2xl font-bold tracking-tight transition-colors duration-300 ${
+            className={`font-heading text-xl font-bold transition-colors duration-300 ${
               scrolled ? "text-navy" : "text-white"
             }`}
           >
@@ -70,35 +66,27 @@ export default function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`relative py-2 text-sm font-medium tracking-wide uppercase transition-colors duration-300 ${
-                    scrolled
-                      ? isActive(link.href)
-                        ? "text-gold"
-                        : "text-navy hover:text-gold"
-                      : isActive(link.href)
-                        ? "text-gold-light"
-                        : "text-white/90 hover:text-white"
+                  className={`text-sm font-medium uppercase tracking-wide transition-colors duration-200 ${
+                    isActive(link.href)
+                      ? "text-gold"
+                      : scrolled
+                        ? "text-charcoal hover:text-gold"
+                        : "text-white hover:text-gold"
                   }`}
                 >
                   {link.label}
-                  {/* Active / hover underline */}
-                  <span
-                    className={`absolute bottom-0 left-0 h-0.5 bg-gold transition-all duration-300 ${
-                      isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
-                    }`}
-                  />
                 </Link>
               </li>
             ))}
           </ul>
 
-          {/* Phone Number (Desktop) */}
+          {/* Phone (Desktop) */}
           <a
             href={`tel:${COMPANY.phone.replace(/[^\d+]/g, "")}`}
-            className={`hidden items-center gap-2 text-sm font-semibold transition-colors duration-300 lg:flex ${
+            className={`hidden items-center gap-2 text-sm font-medium transition-colors duration-200 lg:flex ${
               scrolled
-                ? "text-navy hover:text-gold"
-                : "text-white hover:text-gold-light"
+                ? "text-charcoal hover:text-gold"
+                : "text-white hover:text-gold"
             }`}
           >
             <Phone className="h-4 w-4" />
@@ -109,10 +97,10 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileOpen((prev) => !prev)}
-            className={`inline-flex items-center justify-center rounded-md p-2 transition-colors duration-300 lg:hidden ${
+            className={`inline-flex items-center justify-center rounded-md p-2 transition-colors lg:hidden ${
               scrolled
-                ? "text-navy hover:bg-cream"
-                : "text-white hover:bg-white/10"
+                ? "text-charcoal hover:text-navy"
+                : "text-white hover:text-white/80"
             }`}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -133,32 +121,29 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden bg-white shadow-xl lg:hidden"
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="overflow-hidden bg-white lg:hidden"
           >
-            <div className="mx-auto max-w-7xl px-4 pb-6 pt-2 sm:px-6">
-              <ul className="flex flex-col gap-1">
-                {NAV_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`block rounded-lg px-4 py-3 text-base font-medium transition-colors ${
-                        isActive(link.href)
-                          ? "bg-cream text-gold-dark"
-                          : "text-navy hover:bg-cream hover:text-gold"
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            <div className="py-4">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`block px-4 py-3 text-base font-medium transition-colors ${
+                    isActive(link.href)
+                      ? "text-gold"
+                      : "text-navy hover:text-gold"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
 
               {/* Phone in mobile menu */}
-              <div className="mt-4 border-t border-cream-dark pt-4">
+              <div className="mt-2 border-t border-gray-100 pt-4 px-4">
                 <a
                   href={`tel:${COMPANY.phone.replace(/[^\d+]/g, "")}`}
-                  className="flex items-center gap-3 rounded-lg px-4 py-3 text-base font-semibold text-navy hover:bg-cream"
+                  className="flex items-center gap-3 py-3 text-base font-medium text-navy hover:text-gold transition-colors"
                 >
                   <Phone className="h-5 w-5 text-gold" />
                   {COMPANY.phone}

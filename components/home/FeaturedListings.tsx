@@ -1,133 +1,129 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { Home, Bed, Bath, Square, ArrowRight } from "lucide-react";
+import { Home, Bed, Bath, Maximize } from "lucide-react";
 import SectionHeading from "@/components/shared/SectionHeading";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
+import Button from "@/components/shared/Button";
 
-const SAMPLE_LISTINGS = [
+const LISTINGS = [
   {
     id: 1,
     price: "$349,900",
-    address: "1234 Maple Ridge Dr, Hastings, MN 55033",
-    beds: 4,
-    baths: 3,
-    sqft: "2,450",
-    isNew: true,
+    address: "1234 River Bluff Dr, Hastings",
+    beds: 3,
+    baths: 2,
+    sqft: "1,850",
+    badge: "New Listing",
   },
   {
     id: 2,
     price: "$275,000",
-    address: "567 Lakeview Ct, Rochester, MN 55901",
+    address: "567 Oak Street, Rochester",
     beds: 3,
     baths: 2,
-    sqft: "1,800",
-    isNew: true,
+    sqft: "1,620",
+    badge: "New Listing",
   },
   {
     id: 3,
     price: "$425,000",
-    address: "890 Summit Ave, Red Wing, MN 55066",
-    beds: 5,
+    address: "890 Summit Ave, Red Wing",
+    beds: 4,
     baths: 3,
-    sqft: "3,100",
-    isNew: false,
+    sqft: "2,740",
+    badge: "New Listing",
   },
   {
     id: 4,
-    price: "$215,000",
-    address: "321 Prairie Wind Ln, Randolph, MN 55065",
-    beds: 3,
-    baths: 2,
-    sqft: "1,500",
-    isNew: true,
+    price: "$189,900",
+    address: "321 Prairie Wind Ln, Randolph",
+    beds: 2,
+    baths: 1,
+    sqft: "1,180",
+    badge: "Price Reduced",
   },
   {
     id: 5,
-    price: "$389,900",
-    address: "456 Bluff View Rd, Prescott, WI 54021",
-    beds: 4,
-    baths: 3,
-    sqft: "2,700",
-    isNew: false,
+    price: "$525,000",
+    address: "456 Bluff View Rd, Prescott",
+    beds: 5,
+    baths: 4,
+    sqft: "3,400",
+    badge: null,
   },
   {
     id: 6,
-    price: "$299,500",
-    address: "789 Cottage Grove Blvd, Cottage Grove, MN 55016",
+    price: "$310,000",
+    address: "789 Cottage Grove Blvd, Cottage Grove",
     beds: 3,
     baths: 2,
-    sqft: "2,100",
-    isNew: true,
+    sqft: "2,050",
+    badge: null,
   },
 ];
 
 export default function FeaturedListings() {
   return (
-    <section className="bg-cream py-20 px-4">
-      <div className="max-w-7xl mx-auto">
-        <SectionHeading title="New on the Market" />
+    <section className="py-20 md:py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          title="Featured Properties"
+          subtitle="Explore the latest homes on the market across Minnesota"
+        />
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"
-        >
-          {SAMPLE_LISTINGS.map((listing) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-12">
+          {LISTINGS.map((listing, index) => (
             <motion.div
               key={listing.id}
-              variants={fadeInUp}
-              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow"
             >
               {/* Image Placeholder */}
-              <div className="relative h-48 bg-gradient-to-br from-navy-light to-navy flex items-center justify-center overflow-hidden">
-                <Home className="w-12 h-12 text-white/40 group-hover:scale-110 transition-transform duration-500" />
+              <div className="relative h-56 bg-gray-100 flex items-center justify-center">
+                <Home className="w-10 h-10 text-gray-300" />
 
-                {listing.isNew && (
-                  <span className="absolute top-4 left-4 bg-gold text-white text-xs font-bold px-3 py-1 rounded-full">
-                    NEW
+                {listing.badge && (
+                  <span className="absolute top-3 left-3 bg-gold text-white text-xs font-semibold px-3 py-1 rounded-md">
+                    {listing.badge}
                   </span>
                 )}
               </div>
 
-              {/* Details */}
+              {/* Content */}
               <div className="p-5">
-                <p className="text-2xl font-bold text-navy">{listing.price}</p>
-                <p className="text-charcoal-light text-sm mt-1">
+                <p className="text-xl font-bold text-navy">{listing.price}</p>
+                <p className="text-sm text-charcoal-light mt-1">
                   {listing.address}
                 </p>
 
-                <div className="flex items-center gap-4 mt-4 text-charcoal-light text-sm">
+                <div className="border-t border-gray-100 my-3" />
+
+                <div className="flex items-center gap-4 text-sm text-charcoal-light">
                   <span className="flex items-center gap-1">
-                    <Bed className="w-4 h-4" />
-                    {listing.beds}
+                    <Bed className="w-4 h-4 text-charcoal-light" />
+                    {listing.beds} Beds
                   </span>
                   <span className="flex items-center gap-1">
-                    <Bath className="w-4 h-4" />
-                    {listing.baths}
+                    <Bath className="w-4 h-4 text-charcoal-light" />
+                    {listing.baths} Baths
                   </span>
                   <span className="flex items-center gap-1">
-                    <Square className="w-4 h-4" />
+                    <Maximize className="w-4 h-4 text-charcoal-light" />
                     {listing.sqft} sqft
                   </span>
                 </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* View All Link */}
-        <div className="text-center mt-12">
-          <Link
-            href="/buy"
-            className="inline-flex items-center gap-2 text-gold font-semibold hover:gap-3 transition-all duration-300"
-          >
+        <div className="flex justify-center mt-10">
+          <Button variant="outline" href="/buy">
             View All Listings
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+          </Button>
         </div>
       </div>
     </section>
