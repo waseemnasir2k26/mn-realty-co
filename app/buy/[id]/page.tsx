@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import MortgageCalculator from "@/components/MortgageCalculator";
+import ListingActions from "@/components/ListingActions";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -244,6 +245,15 @@ export default async function ListingPage({ params }: Props) {
                 {listing.agent}
               </p>
             )}
+          </div>
+
+          {/* Listing Actions */}
+          <div className="mt-6">
+            <ListingActions
+              listingId={listing.id}
+              listingPrice={listing.price}
+              listingAddress={`${listing.address}, ${listing.city}`}
+            />
           </div>
 
           {/* Mortgage Calculator */}

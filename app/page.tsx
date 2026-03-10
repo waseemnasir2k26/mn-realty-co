@@ -1,6 +1,7 @@
 import HeroSection from "@/components/home/HeroSection";
 import FeaturedListings from "@/components/home/FeaturedListings";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
+import ToolsSection from "@/components/home/ToolsSection";
 import AgentSpotlight from "@/components/home/AgentSpotlight";
 import Testimonials from "@/components/home/Testimonials";
 import NewsFeed from "@/components/home/NewsFeed";
@@ -14,6 +15,7 @@ export default function Home() {
       <TrustBar />
       <FeaturedListings />
       <WhyChooseUs />
+      <ToolsSection />
       <AgentSpotlight />
       <Testimonials />
       <NewsFeed />

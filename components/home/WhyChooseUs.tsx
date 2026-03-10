@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Eye, BarChart3, Camera, MapPin } from "lucide-react";
 import SectionHeading from "@/components/shared/SectionHeading";
+import Button from "@/components/shared/Button";
 
 const BENEFITS = [
   {
@@ -64,6 +65,10 @@ export default function WhyChooseUs() {
               </motion.div>
             );
           })}
+        </div>
+
+        <div className="flex justify-center mt-10">
+          <Button href="/why-us">Learn More About Us</Button>
         </div>
       </div>
     </section>

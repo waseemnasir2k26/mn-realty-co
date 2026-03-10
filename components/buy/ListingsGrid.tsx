@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Bed, Bath, Maximize2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import SaveButton from "@/components/SaveButton";
 import SectionHeading from "@/components/shared/SectionHeading";
 import Button from "@/components/shared/Button";
 import { LISTINGS, formatPrice, filterListings } from "@/lib/listings";
@@ -67,6 +68,11 @@ export default function ListingsGrid() {
                       {listing.badge}
                     </span>
                   )}
+
+                  <SaveButton
+                    listingId={listing.id}
+                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center hover:bg-white transition z-10"
+                  />
                 </div>
 
                 {/* Content */}

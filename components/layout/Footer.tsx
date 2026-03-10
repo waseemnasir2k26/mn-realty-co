@@ -11,11 +11,12 @@ const quickLinks = [
 ];
 
 const services = [
-  "ListingTracker\u2122",
-  "OfferTracker\u00AE",
-  "ClosingTracker\u00AE",
-  "Home Valuation",
-  "Buyer Resources",
+  { label: "ListingTracker\u2122", href: "" },
+  { label: "OfferTracker\u00AE", href: "" },
+  { label: "ClosingTracker\u00AE", href: "" },
+  { label: "Home Valuation", href: "" },
+  { label: "Buyer Resources", href: "" },
+  { label: "Net Proceeds Calculator", href: "/sell/roi-calculator" },
 ];
 
 export default function Footer() {
@@ -58,8 +59,17 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               {services.map((service) => (
-                <li key={service} className="text-sm">
-                  {service}
+                <li key={service.label} className="text-sm">
+                  {service.href ? (
+                    <Link
+                      href={service.href}
+                      className="hover:text-gold transition-colors"
+                    >
+                      {service.label}
+                    </Link>
+                  ) : (
+                    service.label
+                  )}
                 </li>
               ))}
             </ul>

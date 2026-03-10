@@ -46,7 +46,7 @@ export default function SellHero() {
           className="mt-8 flex justify-center"
         >
           <Link
-            href="#seller-form"
+            href="/sell#seller-form"
             className="bg-gold text-white font-semibold px-8 py-4 rounded-lg hover:bg-gold-dark transition text-base"
           >
             Get Your Free Home Valuation

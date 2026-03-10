@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ChatBot from "@/components/ChatBot";
 import SocialProof from "@/components/SocialProof";
+import { AuthProvider } from "@/components/AuthProvider";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -35,11 +36,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
       <body className="font-body antialiased">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <SocialProof />
-        <ChatBot />
+        <AuthProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <SocialProof />
+          <ChatBot />
+        </AuthProvider>
       </body>
     </html>
   );

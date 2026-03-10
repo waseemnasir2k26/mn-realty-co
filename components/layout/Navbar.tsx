@@ -1,16 +1,20 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Phone, Menu, X } from "lucide-react";
+import { Phone, Menu, X, LogOut, LayoutDashboard } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { NAV_LINKS, COMPANY } from "@/lib/constants";
+import { useAuth } from "@/components/AuthProvider";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const { user, logout } = useAuth();
 
   const handleScroll = useCallback(() => {
     setScrolled(window.scrollY > 20);
@@ -34,6 +38,22 @@ export default function Navbar() {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
+
+  /* Close dropdown on click outside */
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  /* Close dropdown on route change */
+  useEffect(() => {
+    setDropdownOpen(false);
+  }, [pathname]);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -80,18 +100,64 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Phone (Desktop) */}
-          <a
-            href={`tel:${COMPANY.phone.replace(/[^\d+]/g, "")}`}
-            className={`hidden items-center gap-2 text-sm font-medium transition-colors duration-200 lg:flex ${
-              scrolled
-                ? "text-charcoal hover:text-gold"
-                : "text-white hover:text-gold"
-            }`}
-          >
-            <Phone className="h-4 w-4" />
-            {COMPANY.phone}
-          </a>
+          {/* Phone + Auth (Desktop) */}
+          <div className="hidden items-center gap-4 lg:flex">
+            <a
+              href={`tel:${COMPANY.phone.replace(/[^\d+]/g, "")}`}
+              className={`flex items-center gap-2 text-sm font-medium transition-colors duration-200 ${
+                scrolled
+                  ? "text-charcoal hover:text-gold"
+                  : "text-white hover:text-gold"
+              }`}
+            >
+              <Phone className="h-4 w-4" />
+              {COMPANY.phone}
+            </a>
+
+            {user ? (
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setDropdownOpen((prev) => !prev)}
+                  className="w-8 h-8 rounded-full bg-gold text-white text-xs font-bold flex items-center justify-center hover:bg-gold-dark transition-colors"
+                  aria-label="Account menu"
+                >
+                  {user.firstName.charAt(0).toUpperCase()}
+                </button>
+
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+                    <Link
+                      href="/dashboard"
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-navy hover:bg-cream transition-colors"
+                    >
+                      <LayoutDashboard className="h-4 w-4" />
+                      Dashboard
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={logout}
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm text-navy hover:bg-cream transition-colors w-full text-left"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  scrolled
+                    ? "text-charcoal hover:text-gold"
+                    : "text-white hover:text-gold"
+                }`}
+              >
+                Sign In
+              </Link>
+            )}
+          </div>
 
           {/* Mobile Menu Toggle */}
           <button
@@ -148,6 +214,36 @@ export default function Navbar() {
                   <Phone className="h-5 w-5 text-gold" />
                   {COMPANY.phone}
                 </a>
+              </div>
+
+              {/* Auth in mobile menu */}
+              <div className="border-t border-gray-100 pt-2 px-4">
+                {user ? (
+                  <>
+                    <Link
+                      href="/dashboard"
+                      className="flex items-center gap-3 py-3 text-base font-medium text-navy hover:text-gold transition-colors"
+                    >
+                      <LayoutDashboard className="h-5 w-5 text-gold" />
+                      Dashboard
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={logout}
+                      className="flex items-center gap-3 py-3 text-base font-medium text-navy hover:text-gold transition-colors w-full text-left"
+                    >
+                      <LogOut className="h-5 w-5 text-gold" />
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-3 py-3 text-base font-medium text-navy hover:text-gold transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                )}
               </div>
             </div>
           </motion.div>
