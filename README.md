@@ -1,3 +1,11 @@
+# mn-realty-co
+
+A Next.js real-estate / property-listing demo site (buy, sell, agents, dashboard) with mortgage, affordability and ROI calculators.
+
+## Status
+
+Last reviewed: September 2026 · release v2026.09
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
