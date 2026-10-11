@@ -1,0 +1,4 @@
+- mn-realty-co is a public Next.js (App Router) + TypeScript real-estate demo with buy, sell, agents, dashboard routes and mortgage, affordability and ROI calculators.
+- State: last feature work was March 2026, with a Hire Me SEO block added 2026-04-07; no application code changed this month.
+- Reviewed October 2026: README, tree and history read; all README external links (Calendly, Fiverr, skynetjoe.com, WhatsApp, the cross-linked repos, Next.js docs) return 200. The Hire Me links were updated to the current Fiverr, Upwork and Calendly URLs.
+- Known gaps: below its intro the README is still stock create-next-app text; no LICENSE; no tests or CI.
